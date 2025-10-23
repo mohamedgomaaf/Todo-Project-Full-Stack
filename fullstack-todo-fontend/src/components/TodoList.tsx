@@ -13,7 +13,7 @@ const TodoList = () => {
   const [queryVersion, setQueryVersion] = useState(1);
   const [isUpdating, setIsUpdating] = useState(false);
   const [todoToEdit, setTodoToEdit] = useState<ITodo>({
-    id: 0,
+    documentId: 0,
     title: "",
     description: "",
   });
@@ -39,7 +39,7 @@ const TodoList = () => {
 
   const onCloseEditModal = () => {
     setTodoToEdit({
-      id: 0,
+      documentId: 0,
       title: "",
       description: "",
     });
@@ -61,7 +61,7 @@ const TodoList = () => {
   };
   const closeConfirmModal = () => {
     setTodoToEdit({
-      id: 0,
+      documentId: 0,
       title: "",
       description: "",
     });
@@ -88,7 +88,7 @@ const TodoList = () => {
             data: {
               title: faker.word.words(5),
               description: faker.lorem.paragraph(2),
-              user: [userData.user.id],
+              user: [userData.user.documentId],
             },
           },
           {
@@ -112,7 +112,7 @@ const TodoList = () => {
   };
   const onRemove = async () => {
     try {
-      const { status } = await axiosInstance.delete(`/todos/${todoToEdit.id}`, {
+      const { status } = await axiosInstance.delete(`/todos/${todoToEdit.documentId}`, {
         headers: {
           Authorization: `Bearer ${userData.jwt}`,
         },
@@ -131,7 +131,7 @@ const TodoList = () => {
     const { title, description } = todoToEdit;
     try {
       const { status } = await axiosInstance.put(
-        `/todos/${todoToEdit.id}`,
+        `/todos/${todoToEdit.documentId}`,
         {
           data: { title, description },
         },
@@ -159,7 +159,7 @@ const TodoList = () => {
       const { status } = await axiosInstance.post(
         `/todos`,
         {
-          data: { title, description, user: [userData.user.id] },
+          data: { title, description, user: [userData.user.documentId] },
         },
         {
           headers: {
@@ -200,11 +200,11 @@ const TodoList = () => {
         data.todos.map((todo: ITodo) => {
           return (
             <div
-              key={todo.id}
+              key={todo.documentId}
               className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
             >
               <p className="w-full font-semibold">
-                {todo.id} - {todo.title}
+                {todo.documentId} - {todo.title}
               </p>
               <div className="flex items-center justify-end w-full space-x-3">
                 <Button
