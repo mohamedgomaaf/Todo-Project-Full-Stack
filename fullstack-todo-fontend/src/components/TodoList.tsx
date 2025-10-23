@@ -26,7 +26,6 @@ const TodoList = () => {
   const storageKey = "loggedInUser";
   const userDataString = localStorage.getItem(storageKey);
   const userData = userDataString ? JSON.parse(userDataString) : null;
-  console.log(userData);
   const { isLoading, data } = useCustomQuery({
     queryKey: ["todoList", `${queryVersion}`],
     url: "users/me?populate=todos",
@@ -77,6 +76,7 @@ const TodoList = () => {
     const { value, name } = evt.target;
     setTodoToEdit({ ...todoToEdit, [name]: value });
   };
+
 
   const onGenerateTodos = async () => {
     //100 record
@@ -204,7 +204,7 @@ const TodoList = () => {
               className="flex items-center justify-between hover:bg-gray-100 duration-300 p-3 rounded-md even:bg-gray-100"
             >
               <p className="w-full font-semibold">
-                {todo.documentId} - {todo.title}
+                {todo.id} - {todo.title}
               </p>
               <div className="flex items-center justify-end w-full space-x-3">
                 <Button
